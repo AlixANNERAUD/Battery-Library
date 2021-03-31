@@ -19,29 +19,46 @@
 
 #include "Battery_Library.hpp"
 
-Battery_Class::Battery_Class(uint8_t Battery_Sensing_Pin, float Resistor_1, float Resistor_2)
+Battery_Class::Battery_Class(uint8_t Battery_Sensing_Pin, uint16_t Minimum_Voltage, uint16_t Maximum_Voltage, float Resistor_1, float Resistor_2)
+    : Sensing_Pin(Battery_Sensing_Pin),
+    Minimum_Voltage(Minimum_Voltage),
+    Maximum_Voltage(Maximum_Voltage)
 {
-    Sensing_Pin = Battery_Sensing_Pin;
+    pinMode(34, INPUT);
+
     // Calculate conversion factor (maximum output voltage of the voltage divider)
-    Conversion_Factor = (Voltage_Table[100] * Resistor_2);
-    Conversion_Factor /= (Resistor_2 + Resistor_1);
+    Conversion_Factor = Resistor_1 + Resistor_2;
+    Conversion_Factor /= Resistor_2;
 }
 
 Battery_Class::~Battery_Class()
 {
+}
 
+uint16_t Battery_Class::Get_Voltage()
+{
+    return (((analogRead(Sensing_Pin) * 3300) / 4096) * Conversion_Factor);
 }
 
 uint8_t Battery_Class::Get_Charge_Level()
 {
-    Current_Level = (analogRead(Sensing_Pin) * Conversion_Factor) / 4095;
-    // Find matching percentage value for a given voltage
-    for (uint8_t i = 100; i > 0; i--)
+    if (Maximum_Voltage - Minimum_Voltage == 0)
     {
-        if (Current_Level > Voltage_Table[i])
-        {
-            return i;
-        }
+        return 0;
     }
-    return 0;
+    
+    uint32_t Current_Level = analogRead(Sensing_Pin);
+
+    uint8_t i = 1;
+    for (; i < 10; i++)
+    {
+        Current_Level += analogRead(Sensing_Pin);
+    }
+    Current_Level /= i;
+    Current_Level = (Current_Level * 3300) / 4096;
+    Current_Level *= Conversion_Factor;
+    Current_Level -= Minimum_Voltage;
+    Current_Level = Current_Level * 100;
+    Current_Level /= Maximum_Voltage - Minimum_Voltage;
+    return Current_Level;
 }
