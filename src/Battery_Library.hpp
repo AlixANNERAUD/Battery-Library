@@ -1,28 +1,17 @@
-/**
- * @file Battery.cpp
- * @brief Xila's battery management driver header file.
- * @author Alix ANNERAUD
- * @copyright MIT License
- * @version 0.1.0
- * @date 21/05/2020
- * @details Xila battery driver declaration, used by the core and softwares to know the INR 18650 25R level of charge.
- * @section License
- * 
- * Copyright (c) 2020 Alix ANNERAUD
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- * 
-*/
+///
+ /// @file Battery_Library.hpp
+ /// @author Alix ANNERAUD (alix.anneraud@outlook.fr)
+ /// @brief Battery management library header file.
+ /// @version 0.1
+ /// @date 02-04-2021
+ /// 
+ /// @copyright Copyright (c) 2021
+ /// 
 
 #ifndef BATTERY_H_INCLUDED
 #define BATTERY_H_INCLUDED
 
 #include "Arduino.h"
-
-/* Conversion factor =  With a voltage divider with 1:1 relation (here 47 kOhm / 47 kOhm)*/
 
 class Battery_Class
 {
@@ -50,6 +39,26 @@ public:
     inline void Set_Sessing_Pin(uint8_t Sensing_Pin)
     {
         this->Sensing_Pin = Sensing_Pin;
+    }
+
+    inline uint8_t Get_Sensing_Pin()
+    {
+        return Sensing_Pin;
+    }
+
+    inline float Get_Conversion_Factor()
+    {
+        return Conversion_Factor;
+    }
+
+    inline uint16_t Minimum_Voltage()
+    {
+        return Minimum_Voltage;
+    }
+
+    inline uint16_t Maximum_Voltage()
+    {
+        return Maximum_Voltage;
     }
 
     uint8_t Get_Charge_Level();
