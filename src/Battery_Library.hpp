@@ -26,19 +26,40 @@
 
 class Battery_Class
 {
+public:
+    Battery_Class(uint8_t Sensing_Pin = 0xFF, uint16_t Minimum_Voltage = 0, uint16_t Maximum_Voltage = 0, float Resistor_1 = 10, float Resistor_2 = 10);
+    ~Battery_Class();
+
+    inline void Set_Voltages(uint16_t Minimum_Voltage, uint16_t Maximum_Voltage)
+    {
+        this->Minimum_Voltage = Minimum_Voltage;
+        this->Maximum_Voltage = Maximum_Voltage;
+    }
+
+    inline void Set_Resistors(float Resistor_1, float Resistor_2)
+    {
+        Conversion_Factor = Resistor_1 + Resistor_2;
+        Conversion_Factor /= Resistor_2;
+    }
+
+    inline void Set_Conversion_Factor(float Conversion_Factor)
+    {
+        this->Conversion_Factor = Conversion_Factor;
+    }
+
+    inline void Set_Sessing_Pin(uint8_t Sensing_Pin)
+    {
+        this->Sensing_Pin = Sensing_Pin;
+    }
+
+    uint8_t Get_Charge_Level();
+    uint16_t Get_Voltage();
+
 protected:
     uint8_t Sensing_Pin;
     float Conversion_Factor;
     uint16_t Minimum_Voltage;
     uint16_t Maximum_Voltage;
-
-
-public:
-    uint8_t Get_Charge_Level();
-    uint16_t Get_Voltage();
-
-    Battery_Class(uint8_t Battery_Sensing_Pin, uint16_t Minimum_Voltage, uint16_t Maximum_Voltage, float Resistor_1 = 10, float Resistor_2 = 10);
-    ~Battery_Class();
 };
 
 #endif
