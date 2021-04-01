@@ -51,12 +51,12 @@ public:
         return Conversion_Factor;
     }
 
-    inline uint16_t Minimum_Voltage()
+    inline uint16_t Get_Minimum_Voltage()
     {
         return Minimum_Voltage;
     }
 
-    inline uint16_t Maximum_Voltage()
+    inline uint16_t Get_Maximum_Voltage()
     {
         return Maximum_Voltage;
     }
