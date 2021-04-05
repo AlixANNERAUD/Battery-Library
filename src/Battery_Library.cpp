@@ -1,13 +1,12 @@
 ///
- /// @file Battery_Library.cpp
- /// @author Alix ANNERAUD (alix.anneraud@outlook.fr)
- /// @brief Battery management library source file.
- /// @version 0.1.0
- /// @date 21/05/2020
- /// 
- /// @copyright Copyright (c) 2021
- /// 
-
+/// @file Battery_Library.cpp
+/// @author Alix ANNERAUD (alix.anneraud@outlook.fr)
+/// @brief Battery management library source file.
+/// @version 0.1.0
+/// @date 21/05/2020
+///
+/// @copyright Copyright (c) 2021
+///
 
 #include "Battery_Library.hpp"
 
@@ -20,6 +19,25 @@ Battery_Class::Battery_Class(uint8_t Sensing_Pin, uint16_t Minimum_Voltage, uint
     Set_Resistors(Resistor_1, Resistor_2);
 
     pinMode(Sensing_Pin, INPUT);
+}
+
+Battery_Class::Battery_Class(uint8_t Sensing_Pin, uint16_t Minimum_Voltage, uint16_t Maximum_Voltage, float Conversion_Factor)
+    : Sensing_Pin(Sensing_Pin),
+      Conversion_Factor(Conversion_Factor),
+      Minimum_Voltage(Minimum_Voltage),
+      Maximum_Voltage(Maximum_Voltage)
+{
+    // Calculate conversion factor (maximum output voltage of the voltage divider)
+
+    pinMode(Sensing_Pin, INPUT);
+}
+
+Battery_Class::Battery_Class()
+    : Sensing_Pin(0xFF),
+      Conversion_Factor(0),
+      Minimum_Voltage(0),
+      Maximum_Voltage(0)
+{
 }
 
 Battery_Class::~Battery_Class()

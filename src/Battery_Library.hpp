@@ -16,7 +16,9 @@
 class Battery_Class
 {
 public:
-    Battery_Class(uint8_t Sensing_Pin = 0xFF, uint16_t Minimum_Voltage = 0, uint16_t Maximum_Voltage = 0, float Resistor_1 = 10, float Resistor_2 = 10);
+    Battery_Class(uint8_t Sensing_Pin, uint16_t Minimum_Voltage, uint16_t Maximum_Voltage, float Resistor_1, float Resistor_2);
+    Battery_Class(uint8_t Sensing_Pin, uint16_t Minimum_Voltage, uint16_t Maximum_Voltage, float Conversion_Factor);
+    Battery_Class();
     ~Battery_Class();
 
     inline void Set_Voltages(uint16_t Minimum_Voltage, uint16_t Maximum_Voltage)
