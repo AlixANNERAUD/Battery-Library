@@ -50,7 +50,7 @@ uint16_t Battery_Class::Get_Voltage()
     {
         return 0;
     }
-    return (((analogRead(Sensing_Pin) * 3300) / 4096) * Conversion_Factor);
+    return (((analogRead(Sensing_Pin) * 3200) / 4096) * Conversion_Factor);
 }
 
 uint8_t Battery_Class::Get_Charge_Level()
@@ -60,18 +60,20 @@ uint8_t Battery_Class::Get_Charge_Level()
         return 0;
     }
 
-    uint32_t Current_Level = analogRead(Sensing_Pin);
+    uint32_t Current_Level = 0;
 
-    uint8_t i = 1;
-    for (; i < 10; i++)
+    for (uint8_t i = 0; i < 10; i++)
     {
         Current_Level += analogRead(Sensing_Pin);
     }
-    Current_Level /= i;
-    Current_Level = (Current_Level * 3300) / 4096;
-    Current_Level *= Conversion_Factor;
+
+    Current_Level /= 10;
+    Current_Level = ((Current_Level * 3200) / 4096 * Conversion_Factor);
     Current_Level -= Minimum_Voltage;
-    Current_Level = Current_Level * 100;
-    Current_Level /= Maximum_Voltage - Minimum_Voltage;
+    Current_Level = (Current_Level / ((Maximum_Voltage - Minimum_Voltage) / 100));
+    if (Current_Level > 100)
+    {
+        Current_Level = 100;
+    }
     return Current_Level;
 }
