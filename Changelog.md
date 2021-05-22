@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2021-05-21
+
+- Increase precision of measurements (changing calculation methods).
+
 ## [1.0.0] - 2021-04-15
 
 - Initial version.
+
