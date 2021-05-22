@@ -1,6 +1,6 @@
 {
     "name": "Battery Library",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "A simple and lightweight library for battery management on ESP32",
     "keywords": "display, screen, nextion, arduino, hmi, tft",
     "repository":
