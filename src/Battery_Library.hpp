@@ -8,8 +8,12 @@
  /// @copyright Copyright (c) 2021
  /// 
 
-#ifndef BATTERY_H_INCLUDED
-#define BATTERY_H_INCLUDED
+#ifndef Battery_Hpp_Included
+#define Battery_Hpp_Included
+
+#ifndef Battery_Number_Of_Readings
+#define Battery_Number_Of_Readings 40
+#endif
 
 #include "Arduino.h"
 
@@ -29,6 +33,9 @@ public:
 
     inline void Set_Resistors(float Resistor_1, float Resistor_2)
     {
+        if (Resistor_2 == 0)
+            return;
+    
         Conversion_Factor = Resistor_1 + Resistor_2;
         Conversion_Factor /= Resistor_2;
     }
@@ -38,7 +45,7 @@ public:
         this->Conversion_Factor = Conversion_Factor;
     }
 
-    inline void Set_Sessing_Pin(uint8_t Sensing_Pin)
+    inline void Set_Sensing_Pin(uint8_t Sensing_Pin)
     {
         this->Sensing_Pin = Sensing_Pin;
     }
@@ -71,6 +78,9 @@ protected:
     float Conversion_Factor;
     uint16_t Minimum_Voltage;
     uint16_t Maximum_Voltage;
+
+    uint16_t Readings[Battery_Number_Of_Readings];
+    uint16_t Reading_Index;
 };
 
 #endif
