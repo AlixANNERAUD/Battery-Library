@@ -77,18 +77,12 @@ uint8_t Battery_Class::Get_Charge_Level()
     if (Maximum_Voltage - Minimum_Voltage == 0 || Sensing_Pin == 0xFF)
         return 0;
 
-
     uint16_t Current_Level = Get_Voltage();
-
-    log_e("Bat Current voltage: %u", Current_Level);
-    
 
     if (Current_Level < Minimum_Voltage)
         return 0;
     else if (Current_Level > Maximum_Voltage)
         return 100;
-
-    log_e("Bat Current level: %u", (Current_Level - Minimum_Voltage) / ((Maximum_Voltage - Minimum_Voltage) / 100));
 
     return (Current_Level - Minimum_Voltage) / ((Maximum_Voltage - Minimum_Voltage) / 100);
 }
